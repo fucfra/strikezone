@@ -11,12 +11,12 @@ Cloud Functions strategia utente (allineate a StrategyConfigModel / strategy_con
 - save_live_signal (callable): scrive signals con verifica maxSimultaneousTrades (stesso limite del backtest)
 - run_live_signals_from_capital (callable): OHLC da Capital /prices, allineamento TF come backtest,
   generazione segnali (stessa logica _generate_test_signals), salva solo l’ultima barra su `signals` (live).
-- notify_user_on_live_signal_created (trigger Firestore onCreate signals/*): invia FCM agli `fcmTokens`
-  in `users/{uid}`; se breakEven.active e trailingStop.active in strategy_configs, seconda notifica SL manuale.
+- on_signal_document_created (trigger Firestore onCreate signals/*): enforcement max posizioni + notifica FCM
+  agli `fcmTokens` in `users/{uid}`; se breakEven.active e trailingStop.active in strategy_configs, seconda notifica SL manuale.
+  Un solo trigger sul path `signals/*` (due trigger Gen2 sullo stesso documento possono fallire al deploy Eventarc).
 - scheduled_update_live_signals_sl (scheduler ogni minuto UTC): segnali live aperti con break-even e/o trailing
   attivi in strategy_configs; OHLC 1m Capital; aggiorna `stopLoss` + `liveSlTrack` su Firestore; FCM su cambio SL
   o chiusura simulata (coppia + apertura UTC). Disabilitabile con STRIKEZONE_DISABLE_LIVE_SL_SCHEDULER=1.
-- enforce_max_simultaneous_live_signals (trigger Firestore onCreate signals/*): rete di sicurezza se si scrive direttamente su Firestore
 - get_capital_credentials / save_capital_credentials / delete_capital_credentials (POST):
   credenziali Capital.com come da setting_screen / SettingsViewModel
 - capital_com_proxy (POST): proxy verso API Capital.com (HTTP, opzionale)
@@ -97,8 +97,11 @@ from cryptography.fernet import Fernet, InvalidToken
 from firebase_admin import auth, initialize_app, messaging
 from firebase_functions import firestore_fn, https_fn, scheduler_fn
 from firebase_functions.https_fn import FunctionsErrorCode, HttpsError
-from firebase_functions.options import CorsOptions
+from firebase_functions.options import CorsOptions, set_global_options
 from google.cloud import firestore, secretmanager, storage
+
+# Gen2 / Cloud Run: limite istanze di default per ridurre errori transienti di quota al deploy.
+set_global_options(max_instances=10)
 
 _db = None
 _admin_initialized = False
@@ -3582,10 +3585,10 @@ def scheduled_update_live_signals_sl(event: scheduler_fn.ScheduledEvent) -> None
 
 
 @firestore_fn.on_document_created(document="signals/{signalId}")
-def notify_user_on_live_signal_created(event: firestore_fn.Event) -> None:
+def on_signal_document_created(event: firestore_fn.Event) -> None:
     """
-    Dopo creazione segnale live: notifica FCM all'utente; se break-even e trailing stop sono attivi
-    nella strategia, invia anche un avviso per aggiornare manualmente lo SL sulla piattaforma.
+    Unico trigger su `signals/{signalId}`: prima enforcement max posizioni (stesso criterio del backtest),
+    poi notifica FCM. Due decorator separati sullo stesso path possono fallire al deploy Gen2 (Eventarc).
     """
     snap = event.data
     if snap is None:
@@ -3593,6 +3596,29 @@ def notify_user_on_live_signal_created(event: firestore_fn.Event) -> None:
     data = snap.to_dict() or {}
     if data.get("isTest") is True:
         return
+
+    uid_raw = data.get("userId")
+    pair_norm = _normalize_pair_symbols(str(data.get("pair") or ""))
+    signal_id = event.params.get("signalId")
+    if uid_raw and pair_norm and signal_id:
+        cfg_snap = get_db().collection("strategy_configs").document(str(uid_raw)).get()
+        exit_rules = (cfg_snap.to_dict() or {}).get("exitRules") or {}
+        max_sim = _exit_rules_max_simultaneous(exit_rules)
+        if max_sim < 10**6:
+            others = _count_open_live_signals(
+                str(uid_raw), pair_norm, exclude_doc_id=str(signal_id), limit_scan=500
+            )
+            if others >= max_sim:
+                snap.reference.delete()
+                _logger.info(
+                    "signals live: eliminato %s (maxSimultaneousTrades=%s pair=%s altri_aperti=%s)",
+                    signal_id,
+                    max_sim,
+                    pair_norm,
+                    others,
+                )
+                return
+
     uid = str(data.get("userId") or "").strip()
     if not uid:
         return
@@ -3638,42 +3664,6 @@ def notify_user_on_live_signal_created(event: firestore_fn.Event) -> None:
                 "signalId": str(event.params.get("signalId") or ""),
             },
             tokens=tokens,
-        )
-
-
-@firestore_fn.on_document_created(document="signals/{signalId}")
-def enforce_max_simultaneous_live_signals(event: firestore_fn.Event) -> None:
-    """
-    Se un client scrive direttamente su `signals`, rimuove il documento se supera il limite
-    (stesso criterio del backtest: conteggio posizioni senza uscita su userId+pair).
-    """
-    snap = event.data
-    if snap is None:
-        return
-    data = snap.to_dict() or {}
-    if data.get("isTest") is True:
-        return
-    uid = data.get("userId")
-    pair = _normalize_pair_symbols(str(data.get("pair") or ""))
-    signal_id = event.params.get("signalId")
-    if not uid or not pair or not signal_id:
-        return
-
-    cfg_snap = get_db().collection("strategy_configs").document(str(uid)).get()
-    exit_rules = (cfg_snap.to_dict() or {}).get("exitRules") or {}
-    max_sim = _exit_rules_max_simultaneous(exit_rules)
-    if max_sim >= 10**6:
-        return
-
-    others = _count_open_live_signals(str(uid), pair, exclude_doc_id=str(signal_id), limit_scan=500)
-    if others >= max_sim:
-        snap.reference.delete()
-        _logger.info(
-            "signals live: eliminato %s (maxSimultaneousTrades=%s pair=%s altri_aperti=%s)",
-            signal_id,
-            max_sim,
-            pair,
-            others,
         )
 
 
