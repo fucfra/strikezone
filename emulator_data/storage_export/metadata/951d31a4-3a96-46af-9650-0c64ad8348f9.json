@@ -1,0 +1,19 @@
+{
+  "name": "historical_data/GBPJPY/1M/2025/03_Bid.parquet",
+  "bucket": "strikezone-484a9.firebasestorage.app",
+  "metageneration": 1,
+  "generation": 1777704650929,
+  "contentType": "application/octet-stream",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "5542ee8c-8aea-48df-980a-37a4a35ad8c2"
+  ],
+  "etag": "l2uLVOQ7YShyPaXQSHB5vWWotCg",
+  "customMetadata": {},
+  "timeCreated": "2026-05-02T06:50:50.929Z",
+  "updated": "2026-05-02T06:50:50.929Z",
+  "size": 690895,
+  "md5Hash": "D06K5UYxgLSN7O65GZiQ2g==",
+  "crc32c": "3440722934"
+}

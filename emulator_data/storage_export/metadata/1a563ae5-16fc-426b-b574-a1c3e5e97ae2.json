@@ -1,0 +1,15 @@
+{
+  "name": "historical_data/GBPUSD/4H/",
+  "bucket": "strikezone-484a9.firebasestorage.app",
+  "metageneration": 1,
+  "generation": 1777717143525,
+  "contentType": "application/octet-stream",
+  "storageClass": "STANDARD",
+  "downloadTokens": [],
+  "etag": "sSVweceyrRRCAJavWu00ho41WH4",
+  "timeCreated": "2026-05-02T10:19:03.525Z",
+  "updated": "2026-05-02T10:19:03.525Z",
+  "size": 130,
+  "md5Hash": "iUpceipDkyQhwwUflucD5w==",
+  "crc32c": "3108464614"
+}

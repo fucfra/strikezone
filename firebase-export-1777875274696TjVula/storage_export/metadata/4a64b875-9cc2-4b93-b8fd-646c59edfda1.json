@@ -1,0 +1,15 @@
+{
+  "name": "historical_data/GBPJPY/1M/",
+  "bucket": "strikezone-484a9.firebasestorage.app",
+  "metageneration": 1,
+  "generation": 1777704340135,
+  "contentType": "application/octet-stream",
+  "storageClass": "STANDARD",
+  "downloadTokens": [],
+  "etag": "2Xf8R1LWQAHGsh/bDGck6PuK5s4",
+  "timeCreated": "2026-05-02T06:45:40.135Z",
+  "updated": "2026-05-02T06:45:40.135Z",
+  "size": 130,
+  "md5Hash": "iUpceipDkyQhwwUflucD5w==",
+  "crc32c": "3108464614"
+}

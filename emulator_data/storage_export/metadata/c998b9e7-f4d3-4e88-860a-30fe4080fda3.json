@@ -1,0 +1,19 @@
+{
+  "name": "historical_data/GBPJPY/1D/2024/05_Ask.parquet",
+  "bucket": "strikezone-484a9.firebasestorage.app",
+  "metageneration": 1,
+  "generation": 1777739239380,
+  "contentType": "application/octet-stream",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "131167f7-a279-41bf-acd1-0b1e4083abf1"
+  ],
+  "etag": "mi9gms5AFL1hhnkG28XqWrMcikw",
+  "customMetadata": {},
+  "timeCreated": "2026-05-02T16:27:19.380Z",
+  "updated": "2026-05-02T16:27:19.380Z",
+  "size": 5198,
+  "md5Hash": "ScEEroPVxazELU3loEJFDQ==",
+  "crc32c": "3513191050"
+}

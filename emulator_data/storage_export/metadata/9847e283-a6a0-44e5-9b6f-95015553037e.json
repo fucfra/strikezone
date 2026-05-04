@@ -1,0 +1,19 @@
+{
+  "name": "historical_data/EURUSD/4H/2024/10_Bid.parquet",
+  "bucket": "strikezone-484a9.firebasestorage.app",
+  "metageneration": 1,
+  "generation": 1777739192130,
+  "contentType": "application/octet-stream",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "fc1ff616-4d14-458a-b374-942da0bd0506"
+  ],
+  "etag": "TB4hIm2Yg+38ddh6HuRTAutRGLE",
+  "customMetadata": {},
+  "timeCreated": "2026-05-02T16:26:32.130Z",
+  "updated": "2026-05-02T16:26:32.130Z",
+  "size": 11128,
+  "md5Hash": "C9bk/8ntBf4evefVRTS5dw==",
+  "crc32c": "4215002816"
+}

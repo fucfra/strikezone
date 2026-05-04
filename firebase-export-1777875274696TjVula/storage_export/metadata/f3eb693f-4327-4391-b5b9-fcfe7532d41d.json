@@ -1,0 +1,15 @@
+{
+  "name": "historical_data/GBPUSD/15M/2025/",
+  "bucket": "strikezone-484a9.firebasestorage.app",
+  "metageneration": 1,
+  "generation": 1777717155608,
+  "contentType": "application/octet-stream",
+  "storageClass": "STANDARD",
+  "downloadTokens": [],
+  "etag": "hgUyb02cPbyu8cMpvmvCRm0Tx24",
+  "timeCreated": "2026-05-02T10:19:15.608Z",
+  "updated": "2026-05-02T10:19:15.608Z",
+  "size": 130,
+  "md5Hash": "iUpceipDkyQhwwUflucD5w==",
+  "crc32c": "3108464614"
+}

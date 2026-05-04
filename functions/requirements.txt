@@ -1,0 +1,11 @@
+firebase-functions==0.5.0
+google-cloud-firestore==2.*
+google-cloud-secret-manager==2.*
+google-cloud-storage==2.*
+cryptography==41.*
+firebase-admin==6.*
+requests==2.*
+cachetools==5.*
+pandas==2.2.*
+numpy==1.26.*
+pyarrow==15.*

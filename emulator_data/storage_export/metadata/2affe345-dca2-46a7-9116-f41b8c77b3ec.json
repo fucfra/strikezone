@@ -1,0 +1,19 @@
+{
+  "name": "historical_data/EURUSD/1M/2025/06_Ask.parquet",
+  "bucket": "strikezone-484a9.firebasestorage.app",
+  "metageneration": 1,
+  "generation": 1777655535883,
+  "contentType": "application/octet-stream",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "9ec5b34e-2c6d-4738-b8d7-357082027919"
+  ],
+  "etag": "+mKrlRCwNTAnYfxFoR8WE3KVO7s",
+  "customMetadata": {},
+  "timeCreated": "2026-05-01T17:12:15.883Z",
+  "updated": "2026-05-01T17:12:15.883Z",
+  "size": 689492,
+  "md5Hash": "uMaCBRPqfcl5puD7S+fh8A==",
+  "crc32c": "735722976"
+}

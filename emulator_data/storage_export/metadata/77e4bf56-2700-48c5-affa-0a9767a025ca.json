@@ -1,0 +1,19 @@
+{
+  "name": "historical_data/GBPUSD/4H/2026/01_Ask.parquet",
+  "bucket": "strikezone-484a9.firebasestorage.app",
+  "metageneration": 1,
+  "generation": 1777717420065,
+  "contentType": "application/octet-stream",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "d9ddd51e-eb08-48f9-9807-a286036daf16"
+  ],
+  "etag": "3na/URgexed8Q/hzoyPK0gXNDaY",
+  "customMetadata": {},
+  "timeCreated": "2026-05-02T10:23:40.065Z",
+  "updated": "2026-05-02T10:23:40.065Z",
+  "size": 10546,
+  "md5Hash": "UsV0QDBfqR5cI6BwfROx3A==",
+  "crc32c": "846536238"
+}

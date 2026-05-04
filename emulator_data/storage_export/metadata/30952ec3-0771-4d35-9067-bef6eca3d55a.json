@@ -1,0 +1,19 @@
+{
+  "name": "historical_data/GBPUSD/4H/2025/01_Bid.parquet",
+  "bucket": "strikezone-484a9.firebasestorage.app",
+  "metageneration": 1,
+  "generation": 1777717408064,
+  "contentType": "application/octet-stream",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "de9fbc0e-ad7d-4f1a-aa36-a22b485e5f95"
+  ],
+  "etag": "6K+3WI/3QbTGL1XAV95e+F5N1so",
+  "customMetadata": {},
+  "timeCreated": "2026-05-02T10:23:28.064Z",
+  "updated": "2026-05-02T10:23:28.064Z",
+  "size": 10978,
+  "md5Hash": "aM822ycjoEK1P6ZRgeIl+g==",
+  "crc32c": "1353730004"
+}
